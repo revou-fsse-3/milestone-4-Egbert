@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      h1 {
+        font-size: 30px;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .tbl-header {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      .tbl-content {
+        height: 300px;
+        overflow-x: auto;
+        margin-top: 0px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      th {
+        padding: 20px 15px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+        text-transform: uppercase;
+      }
+      td {
+        padding: 15px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 300;
+        font-size: 12px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* demo styles */
+
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+      body {
+        background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+        background: linear-gradient(to right, #25c481, #25b7c4);
+        font-family: "Roboto", sans-serif;
+      }
+      section {
+        margin: 50px;
+      }
+
+      /* follow me template */
+      .made-with-love {
+        margin-top: 40px;
+        padding: 10px;
+        clear: left;
+        text-align: center;
+        font-size: 10px;
+        font-family: arial;
+        color: #fff;
+      }
+      .made-with-love i {
+        font-style: normal;
+        color: #f50057;
+        font-size: 14px;
+        position: relative;
+        top: 2px;
+      }
+      .made-with-love a {
+        color: #fff;
+        text-decoration: none;
+      }
+      .made-with-love a:hover {
+        text-decoration: underline;
+      }
+
+      /* for custom scrollbar for webkit browser*/
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+      ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .greeting-container {
+        text-align: right;
+        margin-top: 20px;
+        margin-right: 20px;
+      }
+
+      .greeting-container a {
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .greeting-container a:hover {
+        color: black;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .search-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .search-input {
+        padding: 10px;
+        width: 300px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        margin-right: 10px;
+        background-color: black;
+        color: #fff;
+      }
+
+      .search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+      }
+
+      #newProductForm {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      #formSection {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        color: #fff;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        width: calc(100% - 24px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: gray;
+        color: white;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+
+    <title>Accounts</title>
+  </head>
+  <body>
+    <div class="greeting-container">
+      Hello, name
+      <a href="">Logout</a>
+    </div>
+
+    <div class="search-container">
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="Search..."
+      />
+      <button class="search-button" onclick="search()">Search</button>
+    </div>
+    <section>
+      <!--for demo wrap-->
+      <h1>Product List</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User ID</th>
+              <th>Account Type</th>
+              <th>Account Number</th>
+              <th>balace</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% for account in response_data['account'] %}
+            <tr>
+              <td>{{ account.id }}</td>
+              <td>{{ account.user_id }}</td>
+              <td>{{ account.account_type }}</td>
+              <td>{{ account_number }}</td>
+              <td>{{ account.balace }}</td>
+              <td>
+                <button>Edit</button>
+                <button>Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <button onclick="openNewProductForm()">Add New Product</button>
+      <div id="newProductForm" style="display: none">
+        <h3 id="formSection">Add New Product</h3>
+        <form id="productForm">
+          <label for="productName">Product Name:</label>
+          <input type="text" id="productName" name="productName" /><br /><br />
+          <label for="productPrice">Price:</label>
+          <input
+            type="number"
+            id="productPrice"
+            name="productPrice"
+          /><br /><br />
+          <label for="productDescription">Description:</label><br />
+          <textarea
+            id="productDescription"
+            name="productDescription"
+            rows="4"
+            cols="50"
+          ></textarea
+          ><br /><br />
+          <button type="button" onclick="submitForm()">Submit</button>
+          <button type="button" onclick="closeNewProductForm()">Cancel</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- follow me template -->
+    <div class="made-with-love">
+      Original Creator Template by
+      <a target="_blank" href="https://codepen.io/nikhil8krishnan"
+        >Nikhil Krishnan</a
+      >
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(window)
+        .on("load resize ", function () {
+          var scrollWidth =
+            $(".tbl-content").width() - $(".tbl-content table").width();
+          $(".tbl-header").css({ "padding-right": scrollWidth });
+        })
+        .resize();
+
+      var form_url = "";
+      var form_method = "";
+      var base_url = "{{ url_for('account_routes.account_home') }}";
+
+      function openNewProductForm() {
+        document.getElementById("newProductForm").style.display = "block";
+        document.getElementById("formSection").innerHTML = "Add New Product";
+        document.getElementById("productForm").reset();
+      }
+    </script>
+  </body>
+</html>

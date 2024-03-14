@@ -13,7 +13,7 @@ class User(Base, UserMixin):
     email = mapped_column(String(255) ,nullable=False, unique=True)
     password_hash = mapped_column(String(255), nullable=False)
     create_at = mapped_column(DateTime(timezone=True), server_default=func.now())
-    update_at = mapped_column(DateTime(timezone=True), onupdate=func.now(), server_oninsert=func.now())
+    update_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     def __repr__(self):
         return f'<User {self.username}>'

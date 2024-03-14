@@ -15,7 +15,7 @@ class Account(Base, UserMixin):
     account_number = mapped_column(String(255) ,nullable=False, unique=True)
     balace = mapped_column(Numeric(10,2), nullable=False)
     create_at = mapped_column(DateTime(timezone=True), server_default=func.now())
-    update_at = mapped_column(DateTime(timezone=True), onupdate=func.now(), server_oninsert=func.now())
+    update_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     user = relationship("User", back_populates="accounts", cascade="all,delete-orphan")
 
 
