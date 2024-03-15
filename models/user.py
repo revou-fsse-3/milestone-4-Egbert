@@ -12,6 +12,7 @@ class User(Base, UserMixin):
     username = mapped_column(String(255), nullable=False, unique=True)
     email = mapped_column(String(255) ,nullable=False, unique=True)
     password_hash = mapped_column(String(255), nullable=False)
+    role = mapped_column(String(255))
     created_at = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     # account = relationship("Account", backref="User")

@@ -10,6 +10,7 @@ from models.user import User
 import os
 from controllers.account import account_routes
 from controllers.user import user_routes
+from controllers.transaction import transaction_routes
 
 load_dotenv()
 
@@ -31,6 +32,7 @@ def load_user(user_id):
 
 app.register_blueprint(account_routes)
 app.register_blueprint(user_routes)
+app.register_blueprint(transaction_routes)
 
 @app.route('/')
 def home():

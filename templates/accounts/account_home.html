@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <style>
+      h1 {
+        font-size: 30px;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      table {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .tbl-header {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+      .tbl-content {
+        height: 300px;
+        overflow-x: auto;
+        margin-top: 0px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      th {
+        padding: 20px 15px;
+        text-align: left;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+        text-transform: uppercase;
+      }
+      td {
+        padding: 15px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 300;
+        font-size: 12px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* demo styles */
+
+      @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+      body {
+        background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+        background: linear-gradient(to right, #25c481, #25b7c4);
+        font-family: "Roboto", sans-serif;
+      }
+      section {
+        margin: 50px;
+      }
+
+      /* follow me template */
+      .made-with-love {
+        margin-top: 40px;
+        padding: 10px;
+        clear: left;
+        text-align: center;
+        font-size: 10px;
+        font-family: arial;
+        color: #fff;
+      }
+      .made-with-love i {
+        font-style: normal;
+        color: #f50057;
+        font-size: 14px;
+        position: relative;
+        top: 2px;
+      }
+      .made-with-love a {
+        color: #fff;
+        text-decoration: none;
+      }
+      .made-with-love a:hover {
+        text-decoration: underline;
+      }
+
+      /* for custom scrollbar for webkit browser*/
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+      ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .greeting-container {
+        text-align: right;
+        margin-top: 20px;
+        margin-right: 20px;
+      }
+
+      .greeting-container a {
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .greeting-container a:hover {
+        color: black;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .search-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .search-input {
+        padding: 10px;
+        width: 300px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        margin-right: 10px;
+        background-color: black;
+        color: #fff;
+      }
+
+      .search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #0056b3;
+      }
+
+      #newAccountForm {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      #formSection {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        color: #fff;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      textarea {
+        width: calc(100% - 24px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: gray;
+        color: white;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+
+    <title>Accounts</title>
+  </head>
+  <body>
+    <div class="greeting-container">
+      Hello, {{ response_data['username'] }}, role is {{ response_data['role']
+      }}
+      <a href="{{ url_for('user_routes.detail_profile') }}">Edit</a>
+      <a href="{{ url_for('user_routes.do_user_logout') }}">Logout</a>
+    </div>
+    <div class="greeting-container">
+      Transactions
+      <a href="{{ url_for('transaction_routes.transaction_home') }}">Details</a>
+    </div>
+
+    <div class="search-container">
+      <input
+        type="text"
+        class="search-input"
+        id="searchInput"
+        placeholder="Search..."
+      />
+      <button class="search-button" onclick="search()">Search</button>
+    </div>
+    <section>
+      <!--for demo wrap-->
+      <h1>Account List</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User ID</th>
+              <th>Account Type</th>
+              <th>Account Number</th>
+              <th>balance</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% for account in response_data['accounts'] %}
+            <tr>
+              <td>{{ account.id }}</td>
+              <td>{{ account.user_id }}</td>
+              <td>{{ account.account_type }}</td>
+              <td>{{ account.account_number }}</td>
+              <td>{{ account.balance }}</td>
+              <td>
+                <a
+                  href="{{ url_for('account_routes.account_detail', id=account.id) }}"
+                  >Details</a
+                >
+                <button
+                  onclick="openEditAccountForm(this)"
+                  id="edit_{{ account.id }}"
+                >
+                  Edit
+                </button>
+                <button
+                  onclick="deleteAccount(this)"
+                  id="delete_{{ account.id }}"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <button onclick="openNewAccountForm()">Add New Account</button>
+      <div id="newAccountForm" style="display: none">
+        <h3 id="formSection">Add New Account</h3>
+        <form id="accountForm">
+          <label for="userId">User ID:</label>
+          <input type="number" id="userId" name="userId" /><br /><br />
+          <label for="accountType">Account Type:</label>
+          <input type="text" id="accountType" name="accountType" /><br /><br />
+          <label for="accountNumber">Account Number:</label>
+          <input
+            type="text"
+            id="accountNumber"
+            name="accountNumber"
+          /><br /><br />
+          <label for="balance">balance:</label>
+          <input type="number" id="balance" name="balance" /><br /><br />
+          <button type="button" onclick="submitForm()">Submit</button>
+          <button type="button" onclick="closeNewAccountForm()">Cancel</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- follow me template -->
+    <div class="made-with-love">
+      Original Creator Template by
+      <a target="_blank" href="https://codepen.io/nikhil8krishnan"
+        >Nikhil Krishnan</a
+      >
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(window)
+        .on("load resize ", function () {
+          var scrollWidth =
+            $(".tbl-content").width() - $(".tbl-content table").width();
+          $(".tbl-header").css({ "padding-right": scrollWidth });
+        })
+        .resize();
+
+      var form_url = "";
+      var form_method = "";
+      var base_url = "{{ url_for('account_routes.account_home') }}";
+
+      function openNewAccountForm() {
+        form_method = "POST";
+        form_url = "{{ url_for('account_routes.account_insert') }}";
+        document.getElementById("newAccountForm").style.display = "block";
+        document.getElementById("formSection").innerHTML = "Add New Account";
+        document.getElementById("accountForm").reset();
+      }
+
+      function submitForm() {
+        var request_data = {
+          user_id: parseInt($("#userId").val()),
+          account_type: $("#accountType").val(),
+          account_number: parseInt($("#accountNumber").val()),
+          balance: parseInt($("#balance").val()),
+        };
+        $.ajax({
+          url: form_url,
+          data: JSON.stringify(request_data),
+          method: form_method,
+          headers: {
+            "Content-type": "application/json",
+          },
+        }).done(function (response) {
+          alert(response.message);
+          location.reload();
+        });
+      }
+
+      function closeNewAccountForm() {
+        document.getElementById("newAccountForm").style.display = "none";
+      }
+
+      function deleteAccount(button) {
+        var selected_account_id = button.id.split("_")[1];
+        var delete_url = base_url + "/" + selected_account_id;
+
+        $.ajax({
+          url: delete_url,
+          method: "DELETE",
+        }).done(function (response) {
+          alert(response.message);
+          location.reload();
+        });
+      }
+
+      function search() {
+        window.location = base_url + "?query=" + $("#searchInput").val();
+      }
+
+      function openEditAccountForm(button) {
+        var selected_account_id = button.id.split("_")[1];
+        form_method = "PUT";
+        form_url = base_url + "/" + selected_account_id;
+
+        var user_id = $("#userId_" + selected_account_id).html();
+        var account_type = $("#accountType_" + selected_account_id).html();
+        var account_number = $("#accountNumber_" + selected_account_id).html();
+        var balance = $("#balance_" + selected_account_id).html();
+
+        $("#accountUserId").val(user_id);
+        $("#accountAccountType").val(account_type);
+        $("#accountAccountNumber").val(account_number);
+        $("#accountBalance").val(balance);
+
+        document.getElementById("newAccountForm").style.display = "block";
+        document.getElementById("formSection").innerHTML = "Edit Account";
+      }
+    </script>
+  </body>
+</html>

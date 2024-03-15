@@ -34,6 +34,24 @@
         .login_button {
             margin-top: 10px;
         }
+        .radio-group {
+            margin-bottom: 10px;
+        }
+        .radio-group label {
+            color: #fff;
+            margin-right: 10px;
+        }
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+        .radio-group input[type="radio"] + label {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .radio-group input[type="radio"]:checked + label {
+            background-color: green;
+        }
         label {
             font-weight: bold;
             color: #fff;
@@ -80,6 +98,13 @@
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
+            </div>
+            <div class="radio-group">
+                <label>Please select your role:</label>
+                <input type="radio" id="user" name="role" value="user" checked>
+                <label for="user">User</label>
+                <input type="radio" id="admin" name="role" value="admin">
+                <label for="admin">Admin</label>
             </div>
             <input type="submit" value="Register">
         </form>

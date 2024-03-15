@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -159,7 +158,7 @@
         background-color: #0056b3;
       }
 
-      #newProductForm {
+      #newTransactionForm {
         background-color: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 5px;
@@ -196,7 +195,7 @@
       }
 
       a {
-        color: #007bff;
+        color: black;
         text-decoration: none;
       }
 
@@ -205,14 +204,10 @@
       }
     </style>
 
-    <title>Accounts</title>
+    <title>Transactions</title>
   </head>
   <body>
-    <div class="greeting-container">
-      Hello, name
-      <a href="">Logout</a>
-    </div>
-
+    <a href="{{ url_for('account_routes.account_home') }}">Back</a>
     <div class="search-container">
       <input
         type="text"
@@ -223,18 +218,17 @@
       <button class="search-button" onclick="search()">Search</button>
     </div>
     <section>
-      <!--for demo wrap-->
-      <h1>Product List</h1>
+      <h1>Transaction List</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
           <thead>
             <tr>
               <th>ID</th>
-              <th>User ID</th>
-              <th>Account Type</th>
-              <th>Account Number</th>
-              <th>balace</th>
-              <th>Action</th>
+              <th>From Transaction Id</th>
+              <th>To Transaction Id</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Description</th>
             </tr>
           </thead>
         </table>
@@ -242,49 +236,67 @@
       <div class="tbl-content">
         <table cellpadding="0" cellspacing="0" border="0">
           <tbody>
-            {% for account in response_data['account'] %}
+            {% for transaction in response_data['transactions'] %}
             <tr>
-              <td>{{ account.id }}</td>
-              <td>{{ account.user_id }}</td>
-              <td>{{ account.account_type }}</td>
-              <td>{{ account_number }}</td>
-              <td>{{ account.balace }}</td>
+              <td>{{ transaction.id }}</td>
+              <td>{{ transaction.from_transaction_id }}</td>
+              <td>{{ transaction.to_transaction_id }}</td>
+              <td>{{ transaction.amount }}</td>
+              <td>{{ transaction.type }}</td>
+              <td>{{ transaction.description }}</td>
               <td>
-                <button>Edit</button>
-                <button>Delete</button>
+                <a
+                  href="{{ url_for('transaction_routes.transaction_detail', id=transaction.id) }}"
+                  >Details</a
+                >
+                <button
+                  onclick="openEditTransactionForm(this)"
+                  id="edit_{{ transaction.id }}"
+                >
+                  Edit
+                </button>
+                <button
+                  onclick="deleteTransaction(this)"
+                  id="delete_{{ transaction.id }}"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-      <button onclick="openNewProductForm()">Add New Product</button>
-      <div id="newProductForm" style="display: none">
-        <h3 id="formSection">Add New Product</h3>
-        <form id="productForm">
-          <label for="productName">Product Name:</label>
-          <input type="text" id="productName" name="productName" /><br /><br />
-          <label for="productPrice">Price:</label>
+      <button onclick="openNewTransactionForm()">Add New Transaction</button>
+      <div id="newTransactionForm" style="display: none">
+        <h3 id="formSection">Add New Transaction</h3>
+        <form id="transactionForm">
+          <label for="fromAccountId">From Account Id:</label>
           <input
             type="number"
-            id="productPrice"
-            name="productPrice"
+            id="fromAccountId"
+            name="fromAccountId"
           /><br /><br />
-          <label for="productDescription">Description:</label><br />
-          <textarea
-            id="productDescription"
-            name="productDescription"
-            rows="4"
-            cols="50"
-          ></textarea
-          ><br /><br />
+          <label for="toAccountId">To Account Id:</label>
+          <input
+            type="number"
+            id="toAccountId"
+            name="toAccountId"
+          /><br /><br />
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount" name="amount" /><br /><br />
+          <label for="type">Type:</label>
+          <input type="text" id="type" name="type" /><br /><br />
+          <label for="description">Description:</label>
+          <input type="text" id="description" name="description" /><br /><br />
           <button type="button" onclick="submitForm()">Submit</button>
-          <button type="button" onclick="closeNewProductForm()">Cancel</button>
+          <button type="button" onclick="closeNewTransactionForm()">
+            Cancel
+          </button>
         </form>
       </div>
     </section>
 
-    <!-- follow me template -->
     <div class="made-with-love">
       Original Creator Template by
       <a target="_blank" href="https://codepen.io/nikhil8krishnan"
@@ -308,12 +320,82 @@
 
       var form_url = "";
       var form_method = "";
-      var base_url = "{{ url_for('account_routes.account_home') }}";
+      var base_url = "{{ url_for('transaction_routes.transaction_home') }}";
 
-      function openNewProductForm() {
-        document.getElementById("newProductForm").style.display = "block";
-        document.getElementById("formSection").innerHTML = "Add New Product";
-        document.getElementById("productForm").reset();
+      function openNewTransactionForm() {
+        form_method = "POST";
+        form_url = "{{ url_for('transaction_routes.transaction_insert') }}";
+        document.getElementById("newTransactionForm").style.display = "block";
+        document.getElementById("formSection").innerHTML =
+          "Add New Transaction";
+        document.getElementById("transactionForm").reset();
+      }
+
+      function submitForm() {
+        var request_data = {
+          from_account_id: parseInt($("#fromAccountId").val()),
+          to_transaction_id: parseInt($("#toAccountId").val()),
+          amount: parseInt($("#amount").val()),
+          type: $("#type").val(),
+          description: $("#description").val(),
+        };
+        $.ajax({
+          url: form_url,
+          data: JSON.stringify(request_data),
+          method: form_method,
+          headers: {
+            "Content-type": "application/json",
+          },
+        }).done(function (response) {
+          alert(response.message);
+          location.reload();
+        });
+      }
+
+      function closeNewTransactionForm() {
+        document.getElementById("newTransactionForm").style.display = "none";
+      }
+
+      function deleteTransaction(button) {
+        var selected_transaction_id = button.id.split("_")[1];
+        var delete_url = base_url + "/" + selected_transaction_id;
+
+        $.ajax({
+          url: delete_url,
+          method: "DELETE",
+        }).done(function (response) {
+          alert(response.message);
+          location.reload();
+        });
+      }
+
+      function search() {
+        window.location = base_url + "?query=" + $("#searchInput").val();
+      }
+
+      function openEditTransactionForm(button) {
+        var selected_transaction_id = button.id.split("_")[1];
+        form_method = "PUT";
+        form_url = base_url + "/" + selected_transaction_id;
+
+        var from_transaction_id = $(
+          "#fromAccountId_" + selected_transaction_id
+        ).html();
+        var to_transaction_id = $(
+          "#toAccountId_" + selected_transaction_id
+        ).html();
+        var amount = $("#amount_" + selected_transaction_id).html();
+        var type = $("#type_" + selected_transaction_id).html();
+        var description = $("#description_" + selected_transaction_id).html();
+
+        $("#transactionFromAccountId").val(from_transaction_id);
+        $("#transactionToAccountId").val(to_transaction_id);
+        $("#transactionAmount").val(amount);
+        $("#transactionType").val(type);
+        $("#transactionDescription").val(description);
+
+        document.getElementById("newTransactionForm").style.display = "block";
+        document.getElementById("formSection").innerHTML = "Edit Transaction";
       }
     </script>
   </body>
