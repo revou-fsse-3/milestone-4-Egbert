@@ -16,7 +16,7 @@
 #     amount = mapped_column(Numeric(10,2))
 #     type = mapped_column(String(255), nullable=False)
 #     description = mapped_column(String(255))
-#     create_at = mapped_column(DateTime(timezone=True), server_default=func.now())
+#     created_at = mapped_column(DateTime(timezone=True), server_default=func.now())
 #     from_account = relationship("Account",foreign_keys=[from_account_id])
 #     to_account = relationship("Account", foreign_keys=[to_account_id])
 

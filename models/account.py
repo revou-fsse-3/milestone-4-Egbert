@@ -14,9 +14,9 @@ class Account(Base, UserMixin):
     account_type = mapped_column(String(255), nullable=False)
     account_number = mapped_column(String(255) ,nullable=False, unique=True)
     balace = mapped_column(Numeric(10,2), nullable=False)
-    create_at = mapped_column(DateTime(timezone=True), server_default=func.now())
-    update_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    user = relationship("User", back_populates="accounts", cascade="all,delete-orphan")
+    created_at = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+    # user = relationship("User", back_populates="Account", cascade="all,delete")
 
 
     def __repr__(self):
