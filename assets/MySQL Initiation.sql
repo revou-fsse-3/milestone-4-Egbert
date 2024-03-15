@@ -27,7 +27,7 @@ CREATE TABLE Accounts (
 );
 
 CREATE TABLE Transactions(
-	id INT PRIMARY KEY,
+	id INT PRIMARY KEY  AUTO_INCREMENT, 
     from_account_id INT,
     to_account_id INT,
     amount DECIMAL(10,2),

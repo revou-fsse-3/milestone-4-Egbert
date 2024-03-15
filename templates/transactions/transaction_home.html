@@ -239,8 +239,8 @@
             {% for transaction in response_data['transactions'] %}
             <tr>
               <td>{{ transaction.id }}</td>
-              <td>{{ transaction.from_transaction_id }}</td>
-              <td>{{ transaction.to_transaction_id }}</td>
+              <td>{{ transaction.from_account_id }}</td>
+              <td>{{ transaction.to_account_id }}</td>
               <td>{{ transaction.amount }}</td>
               <td>{{ transaction.type }}</td>
               <td>{{ transaction.description }}</td>
@@ -334,7 +334,7 @@
       function submitForm() {
         var request_data = {
           from_account_id: parseInt($("#fromAccountId").val()),
-          to_transaction_id: parseInt($("#toAccountId").val()),
+          to_account_id: parseInt($("#toAccountId").val()),
           amount: parseInt($("#amount").val()),
           type: $("#type").val(),
           description: $("#description").val(),
@@ -378,18 +378,14 @@
         form_method = "PUT";
         form_url = base_url + "/" + selected_transaction_id;
 
-        var from_transaction_id = $(
-          "#fromAccountId_" + selected_transaction_id
-        ).html();
-        var to_transaction_id = $(
-          "#toAccountId_" + selected_transaction_id
-        ).html();
+        var from_account_id = $("#fromAccountId_" + selected_transaction_id).html();
+        var to_account_id = $("#toAccountId_" + selected_transaction_id).html();
         var amount = $("#amount_" + selected_transaction_id).html();
         var type = $("#type_" + selected_transaction_id).html();
         var description = $("#description_" + selected_transaction_id).html();
 
-        $("#transactionFromAccountId").val(from_transaction_id);
-        $("#transactionToAccountId").val(to_transaction_id);
+        $("#transactionFromAccountId").val(from_account_id);
+        $("#transactionToAccountId").val(to_account_id);
         $("#transactionAmount").val(amount);
         $("#transactionType").val(type);
         $("#transactionDescription").val(description);
