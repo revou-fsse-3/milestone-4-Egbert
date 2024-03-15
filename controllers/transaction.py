@@ -11,7 +11,7 @@ from cerberus import Validator
 transaction_routes = Blueprint('transaction_routes', __name__)
 
 @transaction_routes.route('/transactions', methods=['GET'])
-# @login_required
+@login_required
 def transaction_home():
     response_data = dict()
 
@@ -36,7 +36,7 @@ def transaction_home():
     return render_template("transactions/transaction_home.html", response_data = response_data)
 
 @transaction_routes.route("/transactions/<id>", methods=['GET'])
-# @role_required('admin')
+@role_required('admin')
 def transaction_detail(id):
     response_data = dict()
 
@@ -56,7 +56,7 @@ def transaction_detail(id):
     return render_template("transactions/transaction_detail.html", response_data = response_data)
 
 @transaction_routes.route("/transactions", methods=['POST'])
-# @role_required('admin')
+@role_required('admin')
 def transaction_insert():
 
     v = Validator(transaction_schema)

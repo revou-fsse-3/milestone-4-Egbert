@@ -1,4 +1,4 @@
-from models.base import Base
+from .base import Base
 from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.orm import mapped_column, relationship
 from sqlalchemy.sql import func
@@ -15,7 +15,6 @@ class User(Base, UserMixin):
     role = mapped_column(String(255))
     created_at = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    # account = relationship("Account", backref="User")
 
     def __repr__(self):
         return f'<User {self.username}>'

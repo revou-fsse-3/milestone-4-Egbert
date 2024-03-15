@@ -16,7 +16,6 @@ class Account(Base, UserMixin):
     balance = mapped_column(Numeric(10,2), nullable=False)
     created_at = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-    # user = relationship("User", back_populates="Account", cascade="all,delete")
 
 
     def __repr__(self):
